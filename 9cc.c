@@ -20,7 +20,7 @@ struct Token {
 	char *str;	//トークン文字列
 };
 
-char *user_input
+char *user_input;
 
 //現在着目しているトークン
 Token *token;
@@ -197,10 +197,11 @@ Node *primary() {
 
 void gen(Node *node) {
 	if (node->kind == ND_NUM) {
-		printf("	push %d\n", node->val);
+		printf("	push%d ", node->val);
 		return;
 	}
-
+	
+	printf("\n");
 	gen(node->lhs);
 	gen(node->rhs);
 
@@ -253,7 +254,7 @@ int main(int argc, char **argv){
 	gen(node);
 
 	//スタックトップに式全体の値が残っているはずなので
-	//それをRAxにロードして関数からの返り値とする
+	//それをRAXにロードして関数からの返り値とする
 	printf("	pop rax\n");
 	printf("	ret\n");
 	return 0;
