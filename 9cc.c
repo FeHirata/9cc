@@ -197,30 +197,29 @@ Node *primary() {
 
 void gen(Node *node) {
 	if (node->kind == ND_NUM) {
-		printf("	push%d ", node->val);
+		printf("	push%d\n", node->val);
 		return;
 	}
-	
-	printf("\n");
+
 	gen(node->lhs);
 	gen(node->rhs);
 
-	printf("	pop rdi\n");
-	printf("	pop rax\n");
+//	printf("	pop rdi\n");
+//	printf("	pop rax\n");
 
 	switch (node->kind) {
 		case ND_ADD:
-			printf("	add rax, rdi\n");
+			printf("	add\n");
 			break;
 		case ND_SUB:
-			printf("	sub rax, rdi\n");
+			printf("	sub\n");
 			break;
 		case ND_MUL:
-			printf("	imul rax, rdi\n");
+			printf("	mul\n");
 			break;
 		case ND_DIV:
-			printf("	cqo\n");
-			printf("	idiv rdi\n");
+//			printf("	cqo\n");
+			printf("	div\n");
 			break;
 	}
 
@@ -246,16 +245,16 @@ int main(int argc, char **argv){
 	Node *node = expr();
 
 	//アセンブリの前半部分を出力
-	printf(".intel_syntax noprefix\n");
-	printf(".globl main\n");
-	printf("main:\n");
+//	printf(".intel_syntax noprefix\n");
+//	printf(".globl main\n");
+//	printf("main:\n");
 
 	//抽象構文木を下りながらコード生成
 	gen(node);
 
 	//スタックトップに式全体の値が残っているはずなので
 	//それをRAXにロードして関数からの返り値とする
-	printf("	pop rax\n");
-	printf("	ret\n");
+	printf("	outn\n");
+	printf("	end\n");
 	return 0;
 }
