@@ -1,0 +1,9 @@
+push17
+push55
+mul
+push38
+push19
+div
+sub
+outn
+end
