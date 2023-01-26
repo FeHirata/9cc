@@ -1,0 +1,5 @@
+push1
+push2
+add
+outn
+end
